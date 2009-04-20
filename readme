@@ -32,4 +32,13 @@ jruby -S warble
 # now comment out tmp/war/WEB-INF/gems/gems/sinatra-*/lib/sinatra.rb line
 # that reads "use_in_file_templates!"
 
-jruby -S warble
+# to test
+../appengine-java-sdk-1.2.0/bin/dev_appserver.sh tmp/war
+
+# to push to Google AppEngine
+# copy your application id into appengine-web.xml file and replace YOUR-APPLICATION-ID
+../appengine-java-sdk-1.2.0/bin/appcfg.sh update tmp/war
+# now visit your app's home on the web!
+
+# change version if you want to push a new "version"
+# inside appengine-web.xml file
