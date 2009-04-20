@@ -1,0 +1,35 @@
+# install jruby
+git clone git://github.com/jruby/jruby.git
+cd jruby
+ant
+ant jar-complete
+cd ..
+mv jruby /usr/local/
+sudo ln -s /usr/local/jruby/bin/jruby /usr/local/bin/jruby
+jruby -v
+jruby -S gem install rake sinatra warbler haml
+
+# get jruby-rack
+git clone git://github.com/nicksieger/jruby-rack.git
+cd jruby-rack
+jruby -S rake SKIP_SPECS=true
+cd ..
+
+# get appengine-java-sdk
+# http://code.google.com/appengine/downloads.html
+
+# create sinatra app
+git clone git://github.com/seven1m/sinatra-appengine-example.git myapp
+cd !$
+cp -r ../jruby-rack/target/jruby-rack-*.jar lib
+cp /usr/local/jruby/lib/jruby-complete.jar lib
+cd lib
+./split-jruby.sh
+cd ..
+cp ../appengine-java-sdk-1.2.0/lib/user/appengine-api-1.0-sdk-1.2.0.jar lib/
+jruby -S warble
+
+# now comment out tmp/war/WEB-INF/gems/gems/sinatra-*/lib/sinatra.rb line
+# that reads "use_in_file_templates!"
+
+jruby -S warble
