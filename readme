@@ -21,16 +21,10 @@ cd ..
 # create sinatra app
 git clone git://github.com/seven1m/sinatra-appengine-example.git myapp
 cd !$
+jruby -S rake jrubyjars JRUBY_COMPLETE=/usr/local/jruby/lib/jruby-complete.jar
 cp -r ../jruby-rack/target/jruby-rack-*.jar lib
-cp /usr/local/jruby/lib/jruby-complete.jar lib
-cd lib
-./split-jruby.sh
-cd ..
 cp ../appengine-java-sdk-1.2.0/lib/user/appengine-api-1.0-sdk-1.2.0.jar lib/
 jruby -S warble
-
-# now comment out tmp/war/WEB-INF/gems/gems/sinatra-*/lib/sinatra.rb line
-# that reads "use_in_file_templates!"
 
 # to test
 ../appengine-java-sdk-1.2.0/bin/dev_appserver.sh tmp/war
